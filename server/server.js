@@ -6,6 +6,7 @@ require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const fitnessRouter = require("./routes/fitnessRoutes");
 const dietRouter = require("./routes/dietRoutes");
+const groceryRouter = require("./routes/groceryRoutes");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/fitness", fitnessRouter);
 app.use("/api/diet", dietRouter);
+app.use("/api/grocery", groceryRouter);
 
 const port = process.env.PORT;
 
