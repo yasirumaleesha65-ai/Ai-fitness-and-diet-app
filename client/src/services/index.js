@@ -80,7 +80,7 @@ export const deletePlan = async (planId) => {
   }
 };
 
-// regenerate / re-create a plan using existing plan data (you can post same body as create)
+// regenerate 
 export const regeneratePlan = async (payload) => {
   try {
     const res = await API.post("/create", payload);
