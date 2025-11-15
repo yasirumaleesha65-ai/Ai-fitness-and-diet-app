@@ -21,7 +21,7 @@ const fitnessPlanSchema = new mongoose.Schema(
       default: "Beginner",
     },
     aiPlan: {
-      type: String, // text response from Gemini AI
+      type: String, 
     },
   },
   { timestamps: true }
