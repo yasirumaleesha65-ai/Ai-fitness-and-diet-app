@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// ✅ Create Plan
+//  Create Plan
 export const createFitnessPlan = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -49,7 +49,7 @@ export const createFitnessPlan = async (req, res) => {
   }
 };
 
-// ✅ Fetch all plans for a user
+//  Fetch all plans for a user
 export const getUserPlans = async (req, res) => {
   try {
     const token = req.cookies.token;
