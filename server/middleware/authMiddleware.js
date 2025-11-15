@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const userAuthVerification = async (req, res, next) => {
-  // console.log("Cookies received:", req.cookies.token); // Check if token cookie exists
+  // console.log("Cookies received:", req.cookies.token); 
 
   const token = req.cookies.token;
   if (!token) {
