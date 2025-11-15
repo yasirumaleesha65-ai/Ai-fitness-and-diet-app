@@ -101,9 +101,9 @@ export const LogInUser = async (req, res) => {
     }
     const token = generateToken(getUser._id);
     res.cookie("token", token, {
-      httpOnly: false, // recommended true for security
-      secure: false, // must be false if you are on HTTP (localhost)
-      sameSite: "lax", // "lax" or "strict" for normal cross-site behavior
+      httpOnly: false, 
+      secure: false, 
+      sameSite: "lax", 
       maxAge: 24 * 60 * 60 * 1000,
     });
 
