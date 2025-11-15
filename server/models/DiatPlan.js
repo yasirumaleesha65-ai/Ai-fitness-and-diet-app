@@ -21,7 +21,7 @@ const dietPlanSchema = new mongoose.Schema(
       required: true,
     },
     aiPlan: {
-      type: String, // response text from AI
+      type: String, 
     },
   },
   { timestamps: true }
