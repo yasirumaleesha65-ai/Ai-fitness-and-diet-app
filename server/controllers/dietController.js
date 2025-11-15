@@ -25,19 +25,19 @@ Return your response in this Markdown-like format:
 ## Daily Calorie Target: ${dailyCalories} kcal
 ## Dietary Preference: ${dietaryPreference}
 
-### 🥣 Breakfast
+###  Breakfast
 - List each item with portion size and calories
 
-### 🍱 Lunch
+###  Lunch
 - List each item with portion size and calories
 
-### 🍛 Dinner
+###  Dinner
 - List each item with portion size and calories
 
-### 🍎 Snacks
+###  Snacks
 - Two snacks between meals with calories
 
-### 💧 Notes
+###  Notes
 - Add a short hydration and supplement recommendation
 
 Use clear headers, bullet points, and line breaks for easy reading.
@@ -51,7 +51,7 @@ Use clear headers, bullet points, and line breaks for easy reading.
       result?.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
       null;
 
-    console.log("📝 Extracted plan:", aiPlan);
+    console.log(" Extracted plan:", aiPlan);
 
     if (!aiPlan) {
       return res.status(500).json({
