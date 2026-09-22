@@ -39,7 +39,9 @@ const createGroceryList = async (req, res) => {
       Format neatly with bullet points and categories.
     `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "models/gemini-3-flash-preview",
+    });
     const result = await model.generateContent(prompt);
     const groceryItems = result.response.text();
 
@@ -58,7 +60,7 @@ const createGroceryList = async (req, res) => {
       groceryList: newList,
     });
   } catch (error) {
-    console.error("❌ Error generating grocery list:", error);
+    console.error(" Error generating grocery list:", error);
     res.status(500).json({
       success: false,
       message: "Failed to generate grocery list",

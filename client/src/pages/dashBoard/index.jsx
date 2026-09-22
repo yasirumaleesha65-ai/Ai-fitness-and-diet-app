@@ -11,7 +11,7 @@ function Dashboard() {
       {},
       {
         withCredentials: true,
-      }
+      },
     );
     if (result.data?.success) {
       navigate("/");
@@ -50,7 +50,7 @@ function Dashboard() {
           onClick={() => navigate("/myplans")}
           className="bg-gray-800 p-6 rounded-2xl shadow-lg text-center hover:scale-105 transition cursor-pointer"
         >
-          <h3 className="text-xl font-bold mb-2">📋 Your Fitness Plans</h3>
+          <h3 className="text-xl font-bold mb-2"> Your Fitness Plans</h3>
           <p className="text-gray-400">View all your AI-generated plans.</p>
         </div>
 
@@ -58,7 +58,7 @@ function Dashboard() {
           onClick={() => navigate("/create-plan")}
           className="bg-blue-600 p-6 rounded-2xl shadow-lg text-center hover:bg-blue-700 hover:scale-105 transition cursor-pointer"
         >
-          <h3 className="text-xl font-bold mb-2">⚡ Create New Plan</h3>
+          <h3 className="text-xl font-bold mb-2"> Create New Plan</h3>
           <p className="text-gray-200">
             Generate a customized workout plan using AI.
           </p>
@@ -70,7 +70,7 @@ function Dashboard() {
           hover:bg-green-700 hover:scale-105 transition cursor-pointer"
         >
           <h3 className="text-xl font-bold mb-2">
-            🍎 Create Your Own Nutrition Plan
+            Create Your Own Nutrition Plan
           </h3>
           <p className="text-gray-100">
             Explore personalized meal recommendations.
@@ -81,7 +81,7 @@ function Dashboard() {
           onClick={() => navigate("/your-diet-plans")}
           className="bg-purple-700 p-6 rounded-2xl shadow-lg text-center hover:bg-purple-800 hover:scale-105 transition cursor-pointer"
         >
-          <h3 className="text-xl font-bold mb-2">📊 Your Diet Plans</h3>
+          <h3 className="text-xl font-bold mb-2"> Your Diet Plans</h3>
           <p className="text-gray-100">
             View all your AI-generated Diet plans.
           </p>

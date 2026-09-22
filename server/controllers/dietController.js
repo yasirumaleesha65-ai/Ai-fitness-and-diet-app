@@ -5,45 +5,212 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const createDietPlan = async (req, res) => {
   try {
-    const { goal, dietaryPreference, dailyCalories } = req.body;
+    const {
+      age,
+      height,
+      weight,
+      targetWeight,
+      goal,
+      dailyCalories,
+      dietaryPreference,
+      mealsPerDay,
+      activityLevel,
+      allergies,
+      dislikedFoods,
+      preferredFoods,
+      budget,
+      cookingTime,
+      waterIntake,
+      planDuration,
+      additionalPreferences,
+    } = req.body;
+
     const userId = req.user?._id;
 
-    if (!goal || !dietaryPreference || !dailyCalories) {
+    if (
+      !age ||
+      !height ||
+      !weight ||
+      !goal ||
+      !dailyCalories ||
+      !dietaryPreference ||
+      !mealsPerDay ||
+      !activityLevel ||
+      !planDuration
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Missing required fields",
+        message: "Please provide all required fields",
       });
     }
 
     const prompt = `
-You are a certified nutritionist. Create a detailed ${goal.toLowerCase()} diet plan 
-for a ${dietaryPreference.toLowerCase()} person with a daily intake of ${dailyCalories} calories.
+You are an AI nutrition planning assistant.
 
-Return your response in this Markdown-like format:
+Create a personalized ${planDuration} diet plan based on the user's
+information below.
 
-# Goal: ${goal}
-## Daily Calorie Target: ${dailyCalories} kcal
-## Dietary Preference: ${dietaryPreference}
+========================
+PERSONAL INFORMATION
+========================
 
-### 🥣 Breakfast
-- List each item with portion size and calories
+Age: ${age} years
+Height: ${height} cm
+Current Weight: ${weight} kg
+Target Weight: ${targetWeight || "Not specified"} kg
 
-### 🍱 Lunch
-- List each item with portion size and calories
+========================
+GOAL
+========================
 
-### 🍛 Dinner
-- List each item with portion size and calories
+Primary Goal: ${goal}
+Daily Calorie Target: ${dailyCalories} kcal
 
-### 🍎 Snacks
-- Two snacks between meals with calories
+========================
+DIETARY PREFERENCES
+========================
 
-### 💧 Notes
-- Add a short hydration and supplement recommendation
+Dietary Preference: ${dietaryPreference}
+Meals Per Day: ${mealsPerDay}
+Activity Level: ${activityLevel}
 
-Use clear headers, bullet points, and line breaks for easy reading.
+========================
+FOOD PREFERENCES
+========================
+
+Preferred Foods:
+${preferredFoods || "No specific preferences"}
+
+Foods to Avoid Because User Dislikes Them:
+${dislikedFoods || "None specified"}
+
+Food Allergies:
+${allergies || "None specified"}
+
+========================
+LIFESTYLE & PRACTICAL CONSTRAINTS
+========================
+
+Food Budget: ${budget}
+Available Cooking Time: ${cookingTime} minutes
+Daily Water Intake Goal: ${waterIntake || "Not specified"} liters
+
+Additional Preferences:
+${additionalPreferences || "None specified"}
+
+========================
+PLAN REQUIREMENTS
+========================
+
+Create a practical and personalized ${planDuration} diet plan.
+
+The plan should include:
+
+1. A short overview of the plan and how it supports the user's goal.
+
+2. Daily calorie target:
+   - Target calories
+   - Approximate calories per meal
+   - Approximate calories for snacks
+
+3. Macronutrient guidance:
+   - Protein
+   - Carbohydrates
+   - Fats
+
+4. A weekly meal schedule.
+
+5. For each meal provide:
+   - Meal name
+   - Food items
+   - Portion sizes
+   - Approximate calories
+   - Approximate protein when useful
+
+6. Include approximately ${mealsPerDay} meals per day.
+
+7. Include healthy snack options where appropriate.
+
+8. Use foods that match the user's dietary preference.
+
+9. Respect all listed food allergies.
+   NEVER recommend foods listed as allergies.
+
+10. Avoid foods the user specifically dislikes when reasonable.
+
+11. Consider the user's budget and cooking time when selecting meals.
+
+12. Provide suitable food substitutions so the user has alternatives.
+
+13. Include hydration guidance.
+
+14. Include a simple weekly grocery shopping list.
+
+15. Include meal-preparation suggestions to make the plan easier to follow.
+
+16. Explain how the user can monitor progress and adjust the plan.
+
+IMPORTANT SAFETY GUIDELINES:
+
+- Do not diagnose medical conditions.
+- Do not prescribe medication or supplements.
+- Do not make claims that a particular food or supplement will treat a disease.
+- If the user has a serious allergy, medical condition, eating disorder,
+  pregnancy, or other medical concern mentioned in their information,
+  recommend consulting an appropriate healthcare professional.
+- Treat calorie and macronutrient values as estimates rather than exact
+  medical recommendations.
+- Do not recommend extreme calorie restriction.
+
+FORMAT:
+
+Use clear Markdown-style headings.
+
+Use this general structure:
+
+# Personalized Diet Plan
+
+## Overview
+
+## Daily Nutrition Targets
+
+## Weekly Meal Plan
+
+### Day 1
+#### Breakfast
+- Food - portion - calories
+
+#### Lunch
+- Food - portion - calories
+
+#### Dinner
+- Food - portion - calories
+
+#### Snacks
+- Food - portion - calories
+
+### Day 2
+...
+
+## Grocery List
+
+## Meal Preparation Tips
+
+## Hydration
+
+## Food Substitutions
+
+## Progress Tracking
+
+## Important Notes
+
+Make the plan practical, realistic, and easy for the user to follow.
 `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "models/gemini-3-flash-preview",
+    });
+
     const result = await model.generateContent(prompt);
 
     let aiPlan =
@@ -51,7 +218,7 @@ Use clear headers, bullet points, and line breaks for easy reading.
       result?.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
       null;
 
-    console.log("📝 Extracted plan:", aiPlan);
+    console.log("Extracted diet plan:", aiPlan);
 
     if (!aiPlan) {
       return res.status(500).json({
@@ -62,9 +229,30 @@ Use clear headers, bullet points, and line breaks for easy reading.
 
     const newPlan = await DietPlan.create({
       userId,
+
+      age,
+      height,
+      weight,
+      targetWeight,
+
       goal,
-      dietaryPreference,
       dailyCalories,
+
+      dietaryPreference,
+      mealsPerDay,
+      activityLevel,
+
+      allergies,
+      dislikedFoods,
+      preferredFoods,
+
+      budget,
+      cookingTime,
+      waterIntake,
+
+      planDuration,
+      additionalPreferences,
+
       aiPlan,
     });
 
@@ -74,7 +262,9 @@ Use clear headers, bullet points, and line breaks for easy reading.
       plan: newPlan,
     });
   } catch (error) {
-    res.status(500).json({
+    console.error("Diet plan creation error:", error);
+
+    return res.status(500).json({
       success: false,
       message: "Error generating diet plan",
       error: error.message,
@@ -82,7 +272,6 @@ Use clear headers, bullet points, and line breaks for easy reading.
   }
 };
 
-// Get all diet plans for a user
 const getUserDietPlans = async (req, res) => {
   try {
     const userId = req.user._id;

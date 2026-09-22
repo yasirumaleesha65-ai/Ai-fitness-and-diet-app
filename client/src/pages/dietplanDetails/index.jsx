@@ -19,7 +19,7 @@ function DietPlanDetails() {
       try {
         const response = await axios.get(
           `http://localhost:3000/api/diet/plans/${id}`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (response.data.success) setPlan(response.data.plan);
       } catch (error) {
@@ -34,7 +34,7 @@ function DietPlanDetails() {
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/diet/${id}`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.data.success) {
         alert("Plan deleted successfully!");
@@ -53,7 +53,7 @@ function DietPlanDetails() {
       const response = await axios.post(
         "http://localhost:3000/api/grocery/create",
         { dietPlanId: id },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -70,7 +70,7 @@ function DietPlanDetails() {
     }
   };
 
-  // ✅ Download PDF (patched for Tailwind oklch color issue)
+  //  Download PDF (patched for Tailwind oklch color issue)
   const handleDownloadPDF = () => {
     const element = pdfRef.current;
 

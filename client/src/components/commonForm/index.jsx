@@ -1,6 +1,4 @@
 import CommonInput from "../commonInput";
-// import CommonSelect from "../commonSelect";
-// import CommonTextarea from "../commonTextArea";
 
 const formTypes = {
   INPUT: "input",

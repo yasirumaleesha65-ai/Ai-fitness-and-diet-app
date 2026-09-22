@@ -7,24 +7,95 @@ const dietPlanSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+    age: {
+      type: Number,
+      required: true,
+    },
+
+    height: {
+      type: Number,
+      required: true,
+    },
+
+    weight: {
+      type: Number,
+      required: true,
+    },
+
+    targetWeight: {
+      type: Number,
+    },
+
     goal: {
       type: String,
       required: true,
     },
-    dietaryPreference: {
-      type: String,
-      enum: ["Vegetarian", "Vegan", "Non-Vegetarian"],
-      required: true,
-    },
+
     dailyCalories: {
       type: Number,
       required: true,
     },
+
+    planDuration: {
+      type: String,
+      required: true,
+    },
+
+    dietaryPreference: {
+      type: String,
+      required: true,
+    },
+
+    mealsPerDay: {
+      type: Number,
+      required: true,
+    },
+
+    activityLevel: {
+      type: String,
+      required: true,
+    },
+
+    allergies: {
+      type: String,
+      default: "",
+    },
+
+    dislikedFoods: {
+      type: String,
+      default: "",
+    },
+
+    preferredFoods: {
+      type: String,
+      default: "",
+    },
+
+    budget: {
+      type: String,
+      default: "Moderate",
+    },
+
+    cookingTime: {
+      type: Number,
+      default: 30,
+    },
+
+    waterIntake: {
+      type: Number,
+    },
+
+    additionalPreferences: {
+      type: String,
+      default: "",
+    },
+
     aiPlan: {
-      type: String, // response text from AI
+      type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("DietPlan", dietPlanSchema);

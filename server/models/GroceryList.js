@@ -18,10 +18,10 @@ const groceryListSchema = new mongoose.Schema(
       type: String,
     },
     groceryItems: {
-      type: String, // Gemini’s response as text
+      type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("GroceryList", groceryListSchema);

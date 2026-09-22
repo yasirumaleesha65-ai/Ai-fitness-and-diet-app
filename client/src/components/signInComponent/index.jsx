@@ -21,7 +21,7 @@ function SignInComponent() {
       {/* Header Section */}
       <div className="text-center mb-6">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 tracking-wide">
-          Welcome Back 💪
+          Welcome Back
         </h2>
         <p className="text-gray-100 text-base sm:text-lg">
           Sign in to track your workouts and reach your goals

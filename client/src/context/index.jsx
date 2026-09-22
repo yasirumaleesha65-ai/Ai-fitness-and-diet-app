@@ -22,25 +22,22 @@ export const FitnessAppProvider = ({ children }) => {
       if (response.data?.success) {
         setUser(response.data.userInfo);
 
-        // If user is on /auth (login/register) and already authenticated, redirect to dashboard
         if (location.pathname === "/auth") {
           navigate("/dash-board");
         }
       } else {
-        // If user is not authenticated and trying to access other routes, send them to login
         if (location.pathname !== "/auth") {
-          navigate("/auth");
+          if (location.pathname !== "/") {
+            navigate("/auth");
+          }
         }
       }
     } catch (error) {
       console.log("Auth check failed:", error);
 
-      // On error, ensure user is redirected to /auth
-      if (location.pathname !== "/auth") {
+      if (location.pathname !== "/" && location.pathname !== "/auth") {
         navigate("/auth");
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -48,7 +45,7 @@ export const FitnessAppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         "http://localhost:3000/api/fitness/plans",
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setFitnessPlans(response.data.plans || []);
     } catch (error) {
